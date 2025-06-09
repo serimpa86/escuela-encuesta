@@ -1,5 +1,5 @@
 // Configuración
-const CLIENT_KEY = '7d940748b3dd11af7a7b2e2029774e67e2a41108fa9444c1ef9815514efe0cd3';
+const CLIENT_KEY = '54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af';
 
 // Evento de instalación
 self.addEventListener('install', event => {
